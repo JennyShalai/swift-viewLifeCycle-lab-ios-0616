@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var seven: UIView!
     @IBOutlet weak var nine: UIView!
     
-    // views represent previous dice scotes
+    // views represent previous dice scores history bar
     @IBOutlet weak var w1: UIView!
     @IBOutlet weak var l1: UILabel!
     @IBOutlet weak var w2: UIView!
@@ -45,8 +45,11 @@ class ViewController: UIViewController {
     @IBAction func diceButtonTapped(sender: AnyObject) {
         disableViewsCurrentDiceScore()
         let currentDiceValue = randomDiceRoll()
-        print("\(currentDiceValue)")
+                print("\(currentDiceValue)")
         diceScoresDisplay.append("\(currentDiceValue)")
+        if diceScoresDisplay.count > 6 {
+            diceScoresDisplay.removeAtIndex(0)
+        }
         displayCurrentDiceScore(currentDiceValue)
         displaySoureInHisotyBar(currentDiceValue)
         
@@ -55,7 +58,6 @@ class ViewController: UIViewController {
     
     func displaySoureInHisotyBar(value: Int) {
         let howManyScoresDisplied = diceScoresDisplay.count
-        
         switch howManyScoresDisplied {
             case 1 :
                 w1.hidden = false
@@ -80,13 +82,13 @@ class ViewController: UIViewController {
             case 6 :
                 w6.hidden = false
                 l6.hidden = false
-                l6.text = "\(value)"
-            default:
-                let newValue = value % 6
-                disableViewsAndLables()
-                displaySoureInHisotyBar(newValue)
-            
-            
+                l1.text = diceScoresDisplay[0]
+                l2.text = diceScoresDisplay[1]
+                l3.text = diceScoresDisplay[2]
+                l4.text = diceScoresDisplay[3]
+                l5.text = diceScoresDisplay[4]
+                l6.text = diceScoresDisplay[5]
+            default: "OMG you hit this line! Dude, you in trouble!"
         }
     }
     
@@ -121,9 +123,10 @@ class ViewController: UIViewController {
             six.hidden = false
             seven.hidden = false
             nine.hidden = false
-        default : true
+        default : "Dice can be in range from 1 to 6 only"
         }
     }
+    
     
     func randomDiceRoll() -> Int {
         return Int(arc4random_uniform(6) + 1)
@@ -131,24 +134,23 @@ class ViewController: UIViewController {
     
     
     func disableViewsAndLables() {
-        
         // views represent previous dice scotes
+        l1.text = ""
+        l2.text = ""
+        l3.text = ""
+        l4.text = ""
+        l5.text = ""
+        l6.text = ""
         w1.hidden = true
         w2.hidden = true
         w3.hidden = true
         w4.hidden = true
         w5.hidden = true
         w6.hidden = true
-        l1.text
-        l2.text = ""
-        l3.text = ""
-        l4.text = ""
-        l5.text = ""
-        l6.text = ""
     }
     
+    
     func disableViewsCurrentDiceScore() {
-        
         // views represent dice's dots
         one.hidden = true
         three.hidden = true
